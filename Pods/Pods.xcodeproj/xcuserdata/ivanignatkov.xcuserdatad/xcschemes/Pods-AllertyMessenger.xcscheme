@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "08CD141D548CF3B0720BFF8768FD847D"
+               BlueprintIdentifier = "E7F8DDA76A1D3DC1D974D62BAA741A29"
                BuildableName = "Pods_AllertyMessenger.framework"
                BlueprintName = "Pods-AllertyMessenger"
                ReferencedContainer = "container:Pods.xcodeproj">

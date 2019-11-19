@@ -15,6 +15,7 @@ target 'AllertyMessenger' do
   pod 'MessageKit'
   pod 'SDWebImage'
   pod 'SwiftKeychainWrapper'
+  pod 'Scaledrone'
 
 
 end

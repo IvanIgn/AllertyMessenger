@@ -12,23 +12,23 @@ import FirebaseFirestore
 import SDWebImage
 
 //var pTel: String!
-class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate {
+class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate , UITextViewDelegate{
 
   
     @IBOutlet weak var nameLabel1: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var telefonLabel: UILabel!
+    //@IBOutlet weak var nameLabel: UILabel!
+    //@IBOutlet weak var telefonLabel: UILabel!
     @IBOutlet weak var telefonLabel1: UILabel!
-    @IBOutlet weak var emailLabel: UILabel!
+   // @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var emailLabel1: UILabel!
     @IBOutlet weak var photoImage: UIImageView!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var addressLabel1: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!  //@IBOutlet weak var addressLabel1: UILabel!
     
-//    @IBOutlet weak var NameTextField: UITextField!
-//    @IBOutlet weak var TelTextFierld: UITextField!
-//    @IBOutlet weak var EmailTextField: UITextField!
-//    @IBOutlet weak var AddressTextField: UITextField!
+    @IBOutlet weak var NameTextField: UITextField!
+    @IBOutlet weak var TelTextFierld: UITextField!
+    @IBOutlet weak var EmailTextField: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    
     
     
     
@@ -41,8 +41,9 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
     var name = ""
     var telefon = ""
     var email = ""
-    var address = ""
+   // var address = ""
     var photo = "" ///*UIImage.self*/ UIImage(named: "profileLogo")
+    var profdesc = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,20 +62,26 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
         photoImage.layer.cornerRadius = 90
         photoImage.clipsToBounds = true
         
+         
+        
        
         
-        nameLabel1.font = UIFont.boldSystemFont(ofSize: 17)
-        telefonLabel1.font = UIFont.boldSystemFont(ofSize: 17)
-        emailLabel1.font = UIFont.boldSystemFont(ofSize: 17)
-        addressLabel1.font = UIFont.boldSystemFont(ofSize: 17)
+//        nameLabel1.font = UIFont.boldSystemFont(ofSize: 17)
+//        telefonLabel1.font = UIFont.boldSystemFont(ofSize: 17)
+//        emailLabel1.font = UIFont.boldSystemFont(ofSize: 17)
+//        addressLabel1.font = UIFont.boldSystemFont(ofSize: 17)
         
         
+//        NameTextField.text = name
+//        TelTextFierld.text = telefon
+//        EmailTextField.text = email
+//        AddressTextField.text = address
        
         
 //       NameTextField.delegate = self
-   //    TelTextFierld.delegate = self
-  //     EmailTextField.delegate = self
- //      AddressTextField.delegate = self
+//       TelTextFierld.delegate = self
+//       EmailTextField.delegate = self
+//       AddressTextField.delegate = self
         
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .close, target: self, action: #selector(outLoged))
 //        if (auth.currentUser?.uid == nil) {
@@ -153,21 +160,23 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
                 guard let data = document.data() else { return }
                 
                 self.name = data["name"] as! String
-                self.nameLabel.text = self.name
-               // self.NameTextField.text = self.name
+                //self.nameLabel.text = self.name
+                self.NameTextField.text = self.name
                 
                 self.telefon = data["telefon"] as! String
-                self.telefonLabel.text = self.telefon
-               // self.TelTextFierld.text = self.telefon
+                //self.telefonLabel.text = self.telefon
+                self.TelTextFierld.text = self.telefon
                 
                 
                 self.email = data["email"] as! String
-                self.emailLabel.text = self.email
-               // self.EmailTextField.text = self.email
+                //self.emailLabel.text = self.email
+                self.EmailTextField.text = self.email
                
-                self.address = data["address"] as! String
-                self.addressLabel.text = self.address
-                //self.AddressTextField.text = self.address
+               // self.address = data["address"] as! String
+                //self.addressLabel.text = self.address
+               // self.AddressTextField.text = self.address
+                self.profdesc = data["profdesc"] as! String 
+                self.descriptionTextView.text = self.profdesc
                 
                self.photo = data["photo"] as! String
                 print("PHOTOS URL IS: \(String(describing: data["photo"]))")
@@ -195,10 +204,8 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
             let name = profile.name
             let telefon = profile.telefon
             let email = profile.email
-            let address = profile.address
-            //let thisPhoto = profile.photo
-            //let thisPhoto = profile.photo
             let photo = profile.photo
+            let profdesc = profile.profdesc
             
 //             if photo == nil {
 //                    photoImage.image = UIImage.init(named: "defaultImage")
@@ -210,7 +217,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
            // let thisPhoto = self.photoImage.sd_setImage(with: userStorage, completed: nil)
             
             let destinationVC = segue.destination as! EditProfileVC
-            destinationVC.initData(name: name!, telefon: telefon!, email: email!, address: address!, photo: photo!)
+            destinationVC.initData(name: name!, telefon: telefon!, email: email!/*, address: address!*/, photo: photo!, profdesc: profdesc! )
         }
   }
     

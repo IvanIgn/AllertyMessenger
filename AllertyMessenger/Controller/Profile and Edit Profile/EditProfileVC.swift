@@ -11,14 +11,14 @@ import Firebase
 import FirebaseFirestore
 //import FirebaseStorage
 
-class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate  {
+class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate  {
     
     
     @IBOutlet weak var addName: UITextField!
-    @IBOutlet weak var addEmail: UITextField!
-    @IBOutlet weak var addAddress: UITextField!
+    @IBOutlet weak var addEmail: UITextField! //@IBOutlet weak var addAddress: UITextField!
     @IBOutlet weak var addTelefon: UITextField!
     @IBOutlet weak var addPhoto: UIImageView!
+    @IBOutlet weak var addDescription: UITextView!
     
    
    // var advertCollectionRef: CollectionReference!
@@ -33,8 +33,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
     var name = ""
     var telefon = ""
     var email = ""
-    var address = ""
     var photo = ""//UIImage(named: "addPhoto")
+    var profdesc = ""
     
     
     override func viewDidLoad() {
@@ -51,8 +51,12 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
         
         addName.delegate = self
         addEmail.delegate = self
-        addAddress.delegate = self
         addTelefon.delegate = self
+        addDescription.delegate = self
+        addDescription.font = UIFont(name: "Times New Roman", size: 19)
+        addDescription.isEditable = true
+        addDescription.layer.cornerRadius = 10
+        
         
         self.hideKeyboardWhenTappedAround()
         
@@ -64,21 +68,21 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(saveClicked))
         
         
-        addName.text = name
-        addTelefon.text = telefon
-        addEmail.text = email
-        addAddress.text = address
+//        addName.text = name
+//        addTelefon.text = telefon
+//        addEmail.text = email
+//        addAddress.text = address
        // addPhoto.image = photo.
     }
     
     
-    func initData(name: String, telefon: String, email: String, address: String, photo: String/*UIImage*/) {
+    func initData(name: String, telefon: String, email: String, photo: String/*UIImage*/, profdesc: String) {
         
         self.name = name
         self.telefon = telefon
         self.email = email
-        self.address = address
         self.photo = photo
+        self.profdesc = profdesc
     }
     
     
@@ -151,7 +155,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
                     let name = addName.text!
                     let telefon = addTelefon.text!
                     let email = addEmail.text!
-                    let address = addAddress.text!
+                    let profdesc = addDescription.text!
+                   // let address = addAddress.text!
                     //let photo = addPhoto.image!
                             
                             
@@ -173,7 +178,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
                                 
                                 imageRef.downloadURL { (url, error) in
                                     guard let downloadURL = url else { return }
-                                    let profile = Profile(name: name, telefon: telefon, email: email, address: address, photo: downloadURL.absoluteString)
+                                    let profile = Profile(name: name, telefon: telefon, email: email/*, address: address*/, photo: downloadURL.absoluteString, profdesc: profdesc)
+                                    
                                     self.advertCollectionRef.setData(profile.toAny()) { (error) in
                                         if let error = error {
                                             debugPrint("Error adding document: \(error.localizedDescription)")
@@ -194,11 +200,12 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
         
         addName.resignFirstResponder()
         addEmail.resignFirstResponder()
-        addAddress.resignFirstResponder()
+        //addAddress.resignFirstResponder()
         addTelefon.resignFirstResponder()
         
         return true;
     }
+    
     
 //    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 //        
@@ -217,6 +224,15 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
 //        
 //    }
     
+     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    
+            if  addDescription.text == "" {
+                addDescription.text = ""
+                addDescription.textColor = UIColor.black
+                addDescription.font = UIFont(name: "Times New Roman", size: 19)
+            }
+            return true
+        }
     
     
     @IBAction func addPhotoClicked(_ sender: UIButton) {
