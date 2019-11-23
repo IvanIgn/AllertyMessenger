@@ -20,6 +20,7 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     
     var userArray = [Profile]()               // main array   //Contact
     var curUserArray = [Profile]()          // search array  // Contact
+    //var message: Message!
     
     var advertCollectionRef: CollectionReference!
     var advertListener: ListenerRegistration!
@@ -58,6 +59,8 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
        loadUsersData  {
         self.smarketTableView.reloadData()
         }
+    
+       tabBarController?.tabBar.isHidden = false
        // upgradeUsersData()
 //        smarketTableView.reloadData()
         
@@ -97,8 +100,10 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
 //       cell.productImage.addGestureRecognizer(tapGesture)
 //       cell.productImage.isUserInteractionEnabled = true
         ///////
-    
+        
                // self.performSegue(withIdentifier: "DetailVC", sender:  cell )
+    
+        
         
         if searching {
             let curAdvertItem = curUserArray[indexPath.row]
@@ -141,6 +146,8 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
 //
+    
+    
 //          let cell = tableView.cellForRow(at: indexPath) as! ContactCell
 //         self.performSegue(withIdentifier: "DetailVC", sender:  cell )
 
@@ -252,6 +259,10 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
              //smarketTableView.allowsSelection = true
             let profile = userArray[indexPath!.row]   // contact
             profile.detailImage = cell.productImage.image
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = "Chats"
+            navigationItem.backBarButtonItem = backItem
            
             
             

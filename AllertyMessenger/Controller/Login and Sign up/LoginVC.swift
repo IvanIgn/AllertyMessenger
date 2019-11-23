@@ -15,6 +15,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
       var db : Firestore!
       var auth : Auth!
       var curUserUID: String!
+      var profile: Profile!
     
     override func viewDidLoad() {
                super.viewDidLoad()
@@ -80,6 +81,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 KeychainWrapper.standard.set(self.email.text!, forKey: "savedEmail")
                 KeychainWrapper.standard.set(self.password.text!, forKey: "savedPassword")
                     print("USER: \(uuid) HAS LOGGED IN")
+                    //self.profile.isOnline = true
                     
 //                    self.curUserUID = self.auth.currentUser?.uid
 //                    print("Current users uid is: \(String(self.curUserUID))")

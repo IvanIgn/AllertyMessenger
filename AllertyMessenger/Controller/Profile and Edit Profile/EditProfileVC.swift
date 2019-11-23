@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 //import FirebaseStorage
+import SwiftKeychainWrapper
 
 class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate  {
     
@@ -68,11 +69,10 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(saveClicked))
         
         
-//        addName.text = name
-//        addTelefon.text = telefon
-//        addEmail.text = email
-//        addAddress.text = address
-       // addPhoto.image = photo.
+//        addName.placeholder = name
+//        addTelefon.placeholder = telefon
+//        addEmail.placeholder = email
+        //addPhoto.image = photo
     }
     
     
@@ -151,7 +151,7 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
            
           print("YOU KLICKED THE SAVE PROFILE BUTTON!!")
 
-
+                    let id = Auth.auth().currentUser?.uid
                     let name = addName.text!
                     let telefon = addTelefon.text!
                     let email = addEmail.text!
@@ -178,13 +178,16 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
                                 
                                 imageRef.downloadURL { (url, error) in
                                     guard let downloadURL = url else { return }
-                                    let profile = Profile(name: name, telefon: telefon, email: email/*, address: address*/, photo: downloadURL.absoluteString, profdesc: profdesc)
-                                    
+                                    let profile = Profile(id: id!,name: name, telefon: telefon, email: email/*, address: address*/, photo: downloadURL.absoluteString, profdesc: profdesc)
+                                    KeychainWrapper.standard.set(name, forKey: "curUserName") // saves users name
                                     self.advertCollectionRef.setData(profile.toAny()) { (error) in
                                         if let error = error {
                                             debugPrint("Error adding document: \(error.localizedDescription)")
                                         } else {
-                                          self.navigationController!.popViewController(animated: true)
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                 self.navigationController!.popViewController(animated: true)
+                                            }
+//                                            self.navigationController!.popViewController(animated: true)
                                         }
                                     }
                                 }

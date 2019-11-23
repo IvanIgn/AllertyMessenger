@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import SDWebImage
+import SwiftKeychainWrapper
 
 //var pTel: String!
 class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate , UITextViewDelegate{
@@ -55,7 +56,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
         let storage = Storage.storage().reference(forURL: "gs://allertymessenger.appspot.com")
         userStorage = storage.child("contactsImages")
       
-        
+        KeychainWrapper.standard.set(name, forKey: "curUserName")
         
         
        // advertCollectionRef = Firestore.firestore().collection("users")
@@ -102,6 +103,8 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
          let uuid = UUID().uuidString.lowercased()
         do {
             try Auth.auth().signOut()
+           // profile.isOnline = false  // user is ofline
+            
             print("USER: \(uuid) HAS LOGGED OUT")
             
         } catch let logoutError {

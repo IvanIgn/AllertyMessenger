@@ -13,6 +13,8 @@ import Foundation
 
 class StartVC: UIViewController {
     
+    var profile: Profile!
+    
     @IBOutlet weak var loginButton: UIButton!
     
     @IBOutlet weak var signUpButton: UIButton!
@@ -20,6 +22,7 @@ class StartVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if Auth.auth().currentUser != nil {
+//            profile.isOnline = true
            // self.performSegue(withIdentifier: "alreadyLoggedIn", sender: nil)
             let mainTabBar = storyboard?.instantiateViewController(withIdentifier: "MainTabBarVC") as! MainTabBarVC
     

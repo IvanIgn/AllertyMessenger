@@ -24,12 +24,20 @@ class MessagesCell: UITableViewCell {
     @IBOutlet weak var sentMessageView: UIView!
     
     var message: Message!
+    //var bla: MessageVC!
     
     var currentUser = Auth.auth().currentUser?.uid
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        recievedMessageView.layer.cornerRadius = 5;
+        recievedMessageView.layer.masksToBounds = true;
+        
+        sentMessageView.layer.cornerRadius = 5;
+        sentMessageView.layer.masksToBounds = true;
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -42,24 +50,24 @@ class MessagesCell: UITableViewCell {
         
         self.message = message
         
-        if message.sender == currentUser {
-            
+        if message.fromID != message.chatPartnerId() {                // message.fromID ==  currentUser
+
             sentMessageView.isHidden = false
-            
-            sentMessageLbl.text = message.message
-            
+
+            sentMessageLbl.text = message.text
+
             recievedMessageLbl.text = ""
             
             recievedMessageLbl.isHidden = true
-            
+
         } else {
-            
+
             sentMessageView.isHidden = true
-            
+
             sentMessageLbl.text = ""
-            
-            recievedMessageLbl.text = message.message
-            
+
+            recievedMessageLbl.text = message.text
+
             recievedMessageLbl.isHidden = false
         }
     }

@@ -19,7 +19,21 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userDescription: UITextView!
     @IBOutlet weak var productTel: UILabel! //@IBOutlet weak var descLbl: UITextView!
+    @IBOutlet weak var bottomView: UIView!
     
+    @IBAction func CallUser(_ sender: Any) {
+        
+        tapFunction(sender: UIButton.self)
+    }
+    //  @IBAction func chatBtnTapped(_ sender: Any) {
+//      //  let messageChatVC = MessageVC()
+//       // navigationController?.pushViewController(messageChatVC, animated: true)
+//
+//        let messageChatVC = self.storyboard?.instantiateViewController(withIdentifier: "myMessageVC") as! MessageVC
+//       // mainTabBar.selectedViewController = mainTabBar.viewControllers?[0]
+//        self.navigationController?.present(messageChatVC, animated: true, completion: nil)
+//
+//    }
     
       var name = ""
       var telefon = ""
@@ -27,32 +41,14 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
       var photo =   ""           //UIImage(named: "addPhoto")
       var profdesc = ""
    
-//    override func viewWillAppear(_ animated: Bool) {
-//       //super.viewDidAppear(animated)
-//               userName.text = profile.name!
-//               userName.font = UIFont.boldSystemFont(ofSize: 25.0)
-//               userImage.image = profile.detailImage!
-//              // locationLabel.text = profile.address!
-//               //productDescription.text = profile.description
-//               userDescription.font = UIFont(name: "Times New Roman", size: 19)
-//               userDescription.text = profile.profdesc!
-//              // userDescription.isEditable = false
-//               userDescription.layer.cornerRadius = 10
-//              // userDescription.delegate = self
-//
-//               productTel.text = profile.telefon!
-//
-//
-//               let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
-//               tap.numberOfTapsRequired = 1
-//               productTel.isUserInteractionEnabled = true
-//               productTel.addGestureRecognizer(tap)
-//
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+       super.viewDidAppear(animated)
+             tabBarController?.tabBar.isHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userName.text = self.name//profile.name
+        userName.text = profile.name
         userName.font = UIFont.boldSystemFont(ofSize: 25.0)
         userImage.image = profile.detailImage!
        // locationLabel.text = profile.address!
@@ -70,7 +66,8 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
         tap.numberOfTapsRequired = 1
         productTel.isUserInteractionEnabled = true
         productTel.addGestureRecognizer(tap)
-
+        
+        animateBottomView()
 
     }
 
@@ -78,7 +75,14 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
         self.profile = profile
     }
     
-    
+    func animateBottomView() {
+        UIView.animate(withDuration: 0.7, animations: {
+        
+        // Move "appleImage" from current position to center
+        self.bottomView.center = self.view.center
+        
+    })
+}
     
     
     
@@ -117,17 +121,20 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
     }
 
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showOnMap" {
-//            //let indexPath = smarketTableView.indexPathForSelectedRow
-//            //let cell = smarketTableView.cellForRow(at: indexPath!) as! MyCell
-//            let locationPlace = profile.address
-//            
-//            
-//            let destinationVC = segue.destination as! MapVC
-//            destinationVC.initLocData(profile: profile)
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showMessageVC" {
+            //let indexPath = smarketTableView.indexPathForSelectedRow
+            //let cell = smarketTableView.cellForRow(at: indexPath!) as! MyCell
+            let usersName = profile.name
+            let backItem = UIBarButtonItem()
+            backItem.title = "Profile"
+            navigationItem.backBarButtonItem = backItem
+            
+            let destinationVC = segue.destination as! MessageVC
+            destinationVC.initData(profile: profile)
+            
+        }
+    }
     
     
 }
