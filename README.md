@@ -1,5 +1,5 @@
 # AllertyMessenger
-# A simple Chat messenger used by Firestore as school project
+### A simple Chat messenger used by Firestore as school project
 
 ## Main features
 ## 1)User registration
