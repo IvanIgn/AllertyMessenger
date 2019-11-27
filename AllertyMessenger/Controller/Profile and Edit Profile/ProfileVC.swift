@@ -13,7 +13,7 @@ import SDWebImage
 import SwiftKeychainWrapper
 
 //var pTel: String!
-class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate , UITextViewDelegate{
+class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate , UITextViewDelegate {
 
   
     @IBOutlet weak var nameLabel1: UILabel!
@@ -45,10 +45,13 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
    // var address = ""
     var photo = "" ///*UIImage.self*/ UIImage(named: "profileLogo")
     var profdesc = ""
+    var trigger = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+      //  print("Current users status is: \(status)")
+        
         db = Firestore.firestore()
         auth = Auth.auth()
          
@@ -62,6 +65,22 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
        // advertCollectionRef = Firestore.firestore().collection("users")
         photoImage.layer.cornerRadius = 90
         photoImage.clipsToBounds = true
+        
+        NameTextField.layer.cornerRadius = 5
+        NameTextField.layer.borderWidth = 2
+        NameTextField.layer.borderColor = CGColor.init(srgbRed: 0.0, green: 0.0, blue: 255.0, alpha: 1)
+        
+        TelTextFierld.layer.cornerRadius = 5
+        TelTextFierld.layer.borderWidth = 2
+        TelTextFierld.layer.borderColor = CGColor.init(srgbRed: 0.0, green: 0.0, blue: 255.0, alpha: 1)
+        
+        EmailTextField.layer.cornerRadius = 5
+        EmailTextField.layer.borderWidth = 2
+        EmailTextField.layer.borderColor = CGColor.init(srgbRed: 0.0, green: 0.0, blue: 255.0, alpha: 1)
+        
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.layer.borderWidth = 2
+        descriptionTextView.layer.borderColor = CGColor.init(srgbRed: 0.0, green: 0.0, blue: 255.0, alpha: 1)
         
          
         
@@ -86,7 +105,10 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
         
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .close, target: self, action: #selector(outLoged))
 //        if (auth.currentUser?.uid == nil) {
+        
             self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Logout", style: .plain, target: self, action: #selector(outLoged))
+            updateStatus(setStatus: false)
+        
 //        } else {
             // let uid = auth.currentUser?.uid == nil
           //  advertCollectionRef.
@@ -100,21 +122,26 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
     @objc func outLoged(_sender: UIBarButtonItem) {
         // self.navigationController!.popViewController(animated: true)
        // Auth.auth().signOut()
+      
+       
          let uuid = UUID().uuidString.lowercased()
         do {
             try Auth.auth().signOut()
            // profile.isOnline = false  // user is ofline
+            
             
             print("USER: \(uuid) HAS LOGGED OUT")
             
         } catch let logoutError {
             print(logoutError)
         }
-        
+       
          self.dismiss(animated: true, completion: nil)
        // let startController = StartVC()
        //present(startController, animated: false, completion: nil)
-    }
+       // updateStatus(setStatus: false)
+        }
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +149,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
             getProfileData()
     }
     
+
     
     
     func getProfileData() {
@@ -181,6 +209,12 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
                 self.profdesc = data["profdesc"] as! String 
                 self.descriptionTextView.text = self.profdesc
                 
+               // self.status = (data["isOnline"] as! Bool)
+              //  print("Status is: \(String(describing: self.status))")
+                
+                //self.isOnline = data["isOnline"] as! Bool
+                //self.isOnline = true
+                
                self.photo = data["photo"] as! String
                 print("PHOTOS URL IS: \(String(describing: data["photo"]))")
                 
@@ -195,7 +229,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
       }
     
     
-    
+   
  
     
 
@@ -209,6 +243,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
             let email = profile.email
             let photo = profile.photo
             let profdesc = profile.profdesc
+           // let isOnline = profile.isOnline
             
 //             if photo == nil {
 //                    photoImage.image = UIImage.init(named: "defaultImage")
@@ -220,7 +255,7 @@ class ProfileVC: UIViewController, UINavigationControllerDelegate, UITextFieldDe
            // let thisPhoto = self.photoImage.sd_setImage(with: userStorage, completed: nil)
             
             let destinationVC = segue.destination as! EditProfileVC
-            destinationVC.initData(name: name!, telefon: telefon!, email: email!/*, address: address!*/, photo: photo!, profdesc: profdesc! )
+            destinationVC.initData(name: name!, telefon: telefon!, email: email!/*, address: address!*/, photo: photo!, profdesc: profdesc!/*, isOnline: isOnline! */)
         }
   }
     

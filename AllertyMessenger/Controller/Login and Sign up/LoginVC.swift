@@ -16,6 +16,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
       var auth : Auth!
       var curUserUID: String!
       var profile: Profile!
+     // static var curStatus: Bool!
     
     override func viewDidLoad() {
                super.viewDidLoad()
@@ -80,13 +81,20 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 if (self.email.text != "Type your email" && self.email.text != "Type your password") {
                 KeychainWrapper.standard.set(self.email.text!, forKey: "savedEmail")
                 KeychainWrapper.standard.set(self.password.text!, forKey: "savedPassword")
-                    print("USER: \(uuid) HAS LOGGED IN")
-                    //self.profile.isOnline = true
+                    if Reachability.isConnectedToNetwork() {
+//                      var status = LoginVC.curStatus
+//                        status = true
+//
+//                        KeychainWrapper.standard.set(status!, forKey: "status")
+                     updateStatus(setStatus: true)
+                     print("USER: \(uuid) HAS LOGGED IN")
+                    }
                     
-//                    self.curUserUID = self.auth.currentUser?.uid
-//                    print("Current users uid is: \(String(self.curUserUID))")
+                   
+                    
                     
             if let user = self.auth.currentUser {
+        
                 let mainTabBar = self.storyboard?.instantiateViewController(withIdentifier: "MainTabBarVC") as! MainTabBarVC
                 mainTabBar.selectedViewController = mainTabBar.viewControllers?[0]
                 self.present(mainTabBar, animated: true, completion: nil)

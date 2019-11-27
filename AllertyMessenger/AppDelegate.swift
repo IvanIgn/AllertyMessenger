@@ -10,16 +10,42 @@ import UIKit
 import CoreData
 import Firebase
 import FirebaseFirestore
+import SwiftKeychainWrapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+  var profile: Profile!
+  var navigationBarAppearace = UINavigationBar.appearance()
+  var splashView = UIActivityIndicatorView()
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         FirebaseApp.configure()
+        
+        //updateStatus(setStatus: true)
+        
+        if Reachability.isConnectedToNetwork(){
+            print("Internet Connection Available!")
+            
+          //  updateStatus(setStatus: true)
+//            //loadStatus(status: true)
+          // updateStatus(setStatus: true)
+//            AppDelegate.Status = true
+//            UserDefaults.standard.set(AppDelegate.Status, forKey: "status")
+                    
+        }else{
+            print("Internet Connection not Available!")
+         // updateStatus(setStatus: false)
+        }
+   
+        navigationBarAppearace.barTintColor = UIColor(red: 72/255, green: 44/255, blue: 112/255, alpha: 1)
+        
+       
         return true
+        
     }
 
     // MARK: UISceneSession Lifecycle
@@ -80,6 +106,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+       //loadStatus(status: false)
+        //KeychainWrapper.standard.removeObject(forKey: "status")
+        //if !Reachability.isConnectedToNetwork() {
+        DispatchQueue.global().sync {
+             updateStatus(setStatus: true)
+        }
+       // updateStatus(setStatus: true)  //  true
+        
+        //}
+    }
+        
 
 
 }

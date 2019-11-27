@@ -36,7 +36,7 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+     
          
         db = Firestore.firestore()
         smarketTableView.dataSource = self
@@ -179,6 +179,7 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
                 {
                     let profile = Profile(snapshot: document)
                     self.userArray.append(profile)
+                   // print("\(document["isOnline"])")
                 }
             }
             completed()
@@ -186,68 +187,11 @@ class UsersTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate
     }
     
    
+
     
       /////////////////////////////////////////////////////////////////////////////////////////////
     
-//    func upgradeUsersData() {
-//        advertListener = advertCollectionRef.order(by: "timestamp", descending: true).addSnapshotListener { (snapshot, error) in
-//            if let error = error {
-//                print("Error getting documents: \(error.localizedDescription)")
-//            } else {
-//                guard let snapshot = snapshot else { return }
-//
-//                self.userArray.removeAll()
-//                for document in snapshot.documents {
-//                    let profile = Profile(snapshot: document)  // contact = Contact
-//                    self.userArray.append(profile)  // (contact)
-//                }
-//                self.smarketTableView.reloadData()
-//                }
-//        }
-//
-//    }
-    
-      /////////////////////////////////////////////////////////////////////////////////////////////
-    
-    /////  TESTING TO GET USERS IN TABLE VIEW ///////  IT WORKS
-//  func loadUsersData() {
-//    advertCollectionRef.order(by: "timestamp", descending: true).getDocuments() { (snapshot, error) in
-//          if let err = error {
-//              debugPrint("Error fetching docs: \(err)")
-//          } else {
-//            guard let  snap = snapshot else {return}
-//
-//
-//            for document in snap.documents {
-//
-//
-//
-//                    let data = document.data()
-//
-//                ////  testing to exclude current user from database //// it  works
-//                if (data["id"] as? String  != Auth.auth().currentUser?.uid) {
-//
-//                    let address = data["address"] as? String ?? "no address"
-//                    let email = data["email"] as? String ?? "no email"
-//                    let name = data["name"] as? String ?? "no name"
-//                    let photo = data["photo"] as? String ?? ""
-//                    let telefon = data["telefon"] as? String ?? "no telefon"
-//                    let documentId = document.documentID
-//
-//                    let newUserArrayData = Profile(name: name, telefon: telefon, email: email, address: address, photo: photo)
-//
-//                    self.userArray.append(newUserArrayData)
-//                }
-//            }
-//
-//
-//            DispatchQueue.main.async {
-//            self.smarketTableView.reloadData()
-//            }
-//         }
-//    }
-//    }
-    
+  
     /////////////////////////////////////////////////////////////////////////////////////////////
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

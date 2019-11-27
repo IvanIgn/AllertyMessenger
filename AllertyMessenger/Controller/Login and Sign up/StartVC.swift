@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 import Foundation
+import SwiftKeychainWrapper
 
 class StartVC: UIViewController {
     
@@ -22,17 +23,29 @@ class StartVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if Auth.auth().currentUser != nil {
-//            profile.isOnline = true
-           // self.performSegue(withIdentifier: "alreadyLoggedIn", sender: nil)
+
+            if Reachability.isConnectedToNetwork() {
+//              var status = LoginVC.curStatus
+//                status = true
+//
+//
+//                KeychainWrapper.standard.set(status!, forKey: "status")
+//                        updateStatus(status: true)
+
+                updateStatus(setStatus: true)
+            }
+
+
             let mainTabBar = storyboard?.instantiateViewController(withIdentifier: "MainTabBarVC") as! MainTabBarVC
-    
+
             mainTabBar.selectedViewController = mainTabBar.viewControllers?[0]
-            
-            
-            
+
+
+
             present(mainTabBar, animated: true, completion: nil)
-            
+
         }
+        
     
     }
     

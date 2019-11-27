@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftKeychainWrapper
 
 class SignUpVC: UIViewController, UITextFieldDelegate {
     
@@ -47,7 +48,15 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                     
                             mainTabBar.selectedViewController = mainTabBar.viewControllers?[0]
                             
-                            
+                            if Reachability.isConnectedToNetwork() {
+//                                                  var status = LoginVC.curStatus
+//                                                    status = true
+//
+//
+//                                                    KeychainWrapper.standard.set(status!, forKey: "status")
+                            //                        updateStatus(status: true)
+                                                    updateStatus(setStatus: true)
+                            }
                             
                     self.present(mainTabBar, animated: true, completion: nil)
                 }

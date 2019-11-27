@@ -28,6 +28,8 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
     var db: Firestore!
     var userStorage: StorageReference!
     var auth: Auth!
+    
+    var curProfile: Profile!
    
     
 
@@ -36,6 +38,7 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
     var email = ""
     var photo = ""//UIImage(named: "addPhoto")
     var profdesc = ""
+    var isOnline: Bool!
     
     
     override func viewDidLoad() {
@@ -76,13 +79,14 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
     }
     
     
-    func initData(name: String, telefon: String, email: String, photo: String/*UIImage*/, profdesc: String) {
+    func initData(name: String, telefon: String, email: String, photo: String/*UIImage*/, profdesc: String/*, isOnline: Bool*/) {
         
         self.name = name
         self.telefon = telefon
         self.email = email
         self.photo = photo
         self.profdesc = profdesc
+        //self.isOnline = isOnline
     }
     
     
@@ -156,7 +160,9 @@ class EditProfileVC: UIViewController, UITextFieldDelegate, UINavigationControll
                     let telefon = addTelefon.text!
                     let email = addEmail.text!
                     let profdesc = addDescription.text!
-                   // let address = addAddress.text!
+                    
+                   
+        // let addres = addAddress.text!
                     //let photo = addPhoto.image!
                             
                             

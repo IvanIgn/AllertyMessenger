@@ -130,7 +130,7 @@ class DetailVC: UIViewController/*, UITextViewDelegate*/ {
             backItem.title = "Profile"
             navigationItem.backBarButtonItem = backItem
             
-            let destinationVC = segue.destination as! MessageVC
+            let destinationVC = segue.destination as! ChatMessagesVC  //MessageVC
             destinationVC.initData(profile: profile)
             
         }
